@@ -6,3 +6,24 @@
       }
     }
   }
+
+@mixin getStep($num) {
+  @for $i from 1 through $num {
+    &:nth-child(#{$i}) .step-circle::after {
+      content: "#{$i}";
+    }
+  }
+}
+@mixin setGrid($col_1, $col_2, $row_1, $row_2) {
+  grid-column: #{$col_1} / #{$col_2};
+  grid-row: #{$row_1} / #{$row_2};
+}
+@mixin showStepText($num) {
+  .step-item {
+    @for $i from 1 through $num {
+      &:nth-child(#{$i}) .step-text {
+        display: block;
+      }
+    }
+  }
+}
