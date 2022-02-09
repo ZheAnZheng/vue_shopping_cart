@@ -1,0 +1,8 @@
+
+@mixin setLogoColor(){
+    @for $i from 1 through 9{
+      &:nth-of-type(#{$i}){
+        fill:var(--primary-text-color)
+      }
+    }
+  }
