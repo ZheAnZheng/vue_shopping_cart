@@ -4,23 +4,45 @@
     <form class="checkout-card">
       <div class="form-group">
         <label name="owner" id="owner">持卡人姓名</label>
-        <input type="text" for="owner" placeholder="John Doe" />
+        <input type="text" for="owner" placeholder="John Doe" v-model="paymentData.owner"/>
       </div>
       <div class="form-group">
         <label name="card-number" id="cardNumber">卡號</label>
-        <input type="text" for="cardNumber" placeholder="1111 2222 3333 4444" />
+        <input type="text" for="cardNumber" placeholder="1111 2222 3333 4444" v-model="paymentData.cardNumber" />
       </div>
       <div class="form-group">
-        <label name="expire-number" id="expire">有效期限</label>
-        <input type="text" for="expire" placeholder="MM/YY" />
+        <label name="expire-number" for="expire">有效期限</label>
+        <input type="text"  id="expire" placeholder="MM/YY"  v-model="paymentData.expire"/>
       </div>
       <div class="form-group">
         <label name="CCV" id="CCV">CVC/CCV</label>
-        <input type="text" for="CCV" placeholder="123" />
+        <input type="text" for="CCV" placeholder="123" v-model="paymentData.CCV"/>
       </div>
     </form>
   </div>
 </template>
+<script>
+export default{
+  data(){
+    return{
+      paymentData:{
+        owner:'',
+        cardNumber:'',
+        expire:'',
+        CCV:''
+      }
+    }
+  },
+  watch:{
+    paymentData:{
+      deep:true,
+      handler:function(val){
+        this.$store.dispatch('checkout/setFormData',val)
+      }
+    }
+  }
+}
+</script>
 <style lang="scss" scoped>
 @import "../assets/scss/mixins.scss";
 @import "../assets/scss/extend.scss";

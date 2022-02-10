@@ -1,32 +1,68 @@
 <template>
-<div class="checkout">
-            <h2>運送方式</h2>
-            <form class="checkout-deliver">
-              <div class="form-group">
-                <input name="deliver" type="radio" id="standard" />
-                <label for="standard">
-                  <div class="checout_radio-text">
-                    <p>標準運送</p>
-                    <p>免費</p>
-                  </div>
-                  <p>約3~7個工作天</p>
-                </label>
-              </div>
-              <div class="form-group">
-                <input name="deliver" type="radio" id="dhl" />
-                <label for="dhl">
-                  <div class="checout_radio-text">
-                    <p>DHL貨運</p>
-                    <p>$500</p>
-                  </div>
-                  <p>48小時內送達</p>
-                </label>
-              </div>
-            </form>
+  <div class="checkout">
+    <h2>運送方式</h2>
+    <form class="checkout-deliver">
+      <div
+        v-for="delivery in deliverWays"
+        :key="delivery.id"
+        class="form-group"
+      >
+        <input
+          name="deliver"
+          type="radio"
+          :id="delivery.formId"
+          :checked="delivery.price>0"
+          :value="delivery.price"
+          v-model="currentPlan"
+        />
+        <label :for="delivery.formId">
+          <div class="checout_radio-text">
+            <p>{{ delivery.name }}</p>
+            <p>{{ delivery.price | priceDisplay }}</p>
           </div>
+          <p>{{ delivery.description }}</p>
+        </label>
+      </div>
+    </form>
+  </div>
 </template>
-
-<style lang='scss' scoped>
+<script>
+import { v4 as uuidv4 } from "uuid";
+import { priceFilter } from '../utils/mixins.js'
+export default {
+  mixins:[priceFilter],
+  data() {
+    return {
+      deliverWays: [
+        {
+          id: uuidv4(),
+          formId: "standard",
+          name: "標準運送",
+          price: 500,
+          description: "約3~7個工作天",
+          default: true,
+        },
+        {
+          id: uuidv4(),
+          formId: "DHL",
+          name: "DHL貨運",
+          price: 0,
+          description: "48小時內送達",
+        },
+      ],
+      currentPlan:500
+    };
+  },
+  watch:{
+    currentPlan(val){
+      console.log(val)
+      this.$store.dispatch('checkout/setFormData',{freight:val})
+    }
+  },
+  
+};
+</script>
+<style lang="scss" scoped>
 .checkout-deliver {
   .form-group {
     display: flex;
@@ -67,11 +103,11 @@
   }
 }
 @media (min-width: 1000px) {
-    .checkout {
+  .checkout {
     height: 336px;
     border-bottom: 1px solid var(--line-color);
   }
-    .checkout-deliver {
+  .checkout-deliver {
     label {
       width: 90%;
     }

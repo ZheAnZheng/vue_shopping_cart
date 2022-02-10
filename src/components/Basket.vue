@@ -23,7 +23,7 @@
     </div>
     <div class="freight">
       <span>運費</span>
-      <span>免運</span>
+      <span>{{freight | priceDisplay}}</span>
     </div>
     <div class="product-total">
       <span>小計</span>
@@ -36,11 +36,12 @@
 
 <script>
 import ButtonGroup from "./ButtonGroup.vue";
-
+import {priceFilter} from '../utils/mixins.js'
 export default {
   components: {
     ButtonGroup,
   },
+  mixins:[priceFilter],
   computed: {
     products() {
       return this.$store.getters["basket/products"];
@@ -48,9 +49,11 @@ export default {
     allProductsTotal() {
       return this.products.reduce(
         (total, product) => (total += this.calcTotal(product)),
-        0
-      );
+        this.freight);
     },
+    freight(){
+      return this.$store.getters['checkout/formData'].freight;
+    }
   },
   methods: {
     calcTotal(product) {
