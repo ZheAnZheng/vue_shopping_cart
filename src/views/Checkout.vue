@@ -7,7 +7,7 @@
       <PaymentForm v-else />
       <ButtonGroup :mode="'computer'" @clickNextStep="clickNextStep" @clickPrevStep="clickPrevStep" :currentStep='currentStep' />
     </section>
-    <Basket />
+    <Basket :currentStep="currentStep" @clickNextStep="clickNextStep" @clickPrevStep="clickPrevStep"/>
   </main>
 </template>
 

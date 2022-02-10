@@ -24,7 +24,7 @@
       <span class="total">$5,298</span>
     </div>
 
-    <ButtonGroup :mode="'mobile'"/>
+    <ButtonGroup :mode="'mobile'" :currentStep="currentStep" @clickNextStep="clickNextStep" @clickPrevStep="clickPrevStep"/>
   </section>
 </template>
 
@@ -51,6 +51,12 @@ export default {
   components: {
     ButtonGroup,
   },
+  props:{
+    currentStep:{
+      type:Number,
+      required:true
+    }
+  },
   created() {
     this.fetchProducts();
   },
@@ -63,6 +69,13 @@ export default {
     fetchProducts() {
       this.products = dummyData;
     },
+    clickNextStep(){
+      this.$emit('clickNextStep')
+    },
+    clickPrevStep(){
+      this.$emit('clickPrevStep')
+    }
+
   },
 };
 </script>

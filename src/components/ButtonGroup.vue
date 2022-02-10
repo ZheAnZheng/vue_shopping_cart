@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="button-wrapper-mobile" v-if='mode==="mobile"'>
-    <button class="pre-button disable" >
+    <button class="pre-button "  :class='{disable : currentStep===0}' @click="handlePrevStep">
       <span v-html="leftArrowIcon"> </span>
       上一步
     </button>
@@ -12,7 +12,7 @@
   </div>
 
   <div class="button-wrapper-computer" v-else>
-    <button class="pre-button " :class='{disable : currentStep<1}' @click="handlePrevStep">
+    <button class="pre-button " :class='{disable : currentStep===0}' @click="handlePrevStep">
       <span v-html="leftArrowIcon" > </span>
       上一步
     </button>
@@ -45,6 +45,7 @@ export default {
   methods:{
     handleNextStep(){
       this.$emit('clickNextStep')
+      
     },
     handlePrevStep(){
       this.$emit('clickPrevStep')
