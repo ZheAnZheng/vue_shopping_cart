@@ -7,11 +7,17 @@
         <div class="product-content">
           <h3>{{ product.name }}</h3>
           <div class="product-setting">
-            <span class="count-btn removeBtn"></span>
+            <span
+              class="count-btn removeBtn"
+              @click="removeCountButton(product)"
+            ></span>
             <span class="product-count">{{ product.count }}</span>
-            <span class="count-btn addBtn"></span>
+            <span
+              class="count-btn addBtn"
+              @click="addCountButton(product)"
+            ></span>
           </div>
-          <span class="product-price">${{ product.price }}</span>
+          <span class="product-price">${{ calcTotal(product) }}</span>
         </div>
       </div>
     </div>
@@ -21,55 +27,46 @@
     </div>
     <div class="product-total">
       <span>小計</span>
-      <span class="total">$5,298</span>
+      <span class="total">${{ allProductsTotal }}</span>
     </div>
 
-    <ButtonGroup :mode="'mobile'"/>
+    <ButtonGroup :mode="'mobile'" />
   </section>
 </template>
 
 <script>
 import ButtonGroup from "./ButtonGroup.vue";
-import { v4 as uuidv4 } from "uuid";
-const dummyData = [
-  {
-    id: uuidv4(),
-    name: "破壞補丁修身牛仔褲",
-    image: require("@/assets/broken_jean@2x.png"),
-    price: 3999,
-    count: 1,
-  },
-  {
-    id: uuidv4(),
-    name: "刷色直筒牛仔褲",
-    image: require("@/assets/classic_jean@2x.png"),
-    price: 1299,
-    count: 1,
-  },
-];
+
 export default {
   components: {
     ButtonGroup,
   },
-  created() {
-    this.fetchProducts();
-  },
-  data() {
-    return {
-      products: [],
-    };
+  computed: {
+    products() {
+      return this.$store.getters["basket/products"];
+    },
+    allProductsTotal() {
+      return this.products.reduce(
+        (total, product) => (total += this.calcTotal(product)),
+        0
+      );
+    },
   },
   methods: {
-    fetchProducts() {
-      this.products = dummyData;
+    calcTotal(product) {
+      return product.count * product.price;
     },
-    clickNextStep(){
-      this.$emit('clickNextStep')
-    },
-    clickPrevStep(){
-      this.$emit('clickPrevStep')
-    }
+    addCountButton(product) {
 
+        product.count++;
+        this.$store.dispatch("basket/changeProduct", product);
+    },
+    removeCountButton(product) {
+      if (product.count > 1) {
+        product.count--;
+        this.$store.dispatch("basket/changeProduct", product);
+      }
+    },
   },
 };
 </script>
