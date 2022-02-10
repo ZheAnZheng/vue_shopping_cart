@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header @handleToggleTheme='handleToggleTheme' :currentTheme="currentTheme"/>
+    <Header />
     <router-view/>
     <Footer/>
   </div>
@@ -15,22 +15,15 @@ export default {
     Header,
     Footer
   },
-  data(){
-    return{
-      currentTheme:'light'
-    }
-  },
-  methods:{
-    handleToggleTheme(){
-     
-      if(this.currentTheme==='light'){
-        this.currentTheme='dark'
-      }else{
-        this.currentTheme='light'
-      }
+  computed:{
+    currentTheme(){
+      return this.$store.getters['currentTheme']
+    },
 
-      document.documentElement.setAttribute("data-theme", this.currentTheme);
-     
+  },
+  watch:{
+    currentTheme(val){
+      document.documentElement.setAttribute("data-theme", val);
     }
   }
 }

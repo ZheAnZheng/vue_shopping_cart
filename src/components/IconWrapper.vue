@@ -15,12 +15,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { SEARCH_ICON, CART_ICON, MOON_ICON , SUN_ICON } from "../assets/Constants.js";
 export default {
-  props:{
-    currentTheme:{
-      type:String,
-      required:true
-    }
-  },
   data() {
     return {
       icons: [
@@ -50,11 +44,18 @@ export default {
       
     };
   },
-
+  computed:{
+    currentTheme(){
+      return this.$store.getters['currentTheme'];
+    }
+  },
   methods:{
     toggleTheme(){
-    
-      this.$emit('toggleTheme')
+      if(this.currentTheme ==='light'){
+        this.$store.dispatch('setTheme','dark')
+      }else{
+        this.$store.dispatch('setTheme','light')
+      }
     }
   }
 };

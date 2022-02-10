@@ -1,22 +1,22 @@
 <template>
 <div>
   <div class="button-wrapper-mobile" v-if='mode==="mobile"'>
-    <button class="pre-button "  :class='{disable : currentStep===0}' @click="handlePrevStep">
+    <button class="pre-button "  :class='{disable : currentStep===0}' @click="handleStep('prev')">
       <span v-html="leftArrowIcon"> </span>
       上一步
     </button>
-    <button class="next-button" @click='handleNextStep'>
+    <button class="next-button" @click="handleStep('next')" >
       下一步
       <span v-html="rightArrowIcon"> </span>
     </button>
   </div>
 
   <div class="button-wrapper-computer" v-else>
-    <button class="pre-button " :class='{disable : currentStep===0}' @click="handlePrevStep">
+    <button class="pre-button " :class='{disable : currentStep <1}' @click="handleStep('prev')">
       <span v-html="leftArrowIcon" > </span>
       上一步
     </button>
-    <button class="next-button" @click='handleNextStep'>
+    <button class="next-button" @click="handleStep('next')"> 
       下一步
       <span v-html="rightArrowIcon"> </span>
     </button>
@@ -31,10 +31,6 @@ export default {
       type:String,
       required:true
     },
-    currentStep:{
-      type:Number,
-      required:true
-    }
   },
   data() {
     return {
@@ -42,14 +38,16 @@ export default {
       leftArrowIcon: LEFT_ARROW,
     }
   },
-  methods:{
-    handleNextStep(){
-      this.$emit('clickNextStep')
+  computed:{
+    currentStep(){
       
-    },
-    handlePrevStep(){
-      this.$emit('clickPrevStep')
+      return this.$store.getters['checkout/currentStep'];
     }
+  },
+  methods:{
+    handleStep(action){
+      this.$store.dispatch('checkout/controllStep',action) 
+    },
   }
 };
 </script>

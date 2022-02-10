@@ -1,13 +1,13 @@
 <template>
   <main>
     <section class="checkout-wrapper">
-      <Stepper :currentStep="currentStep"/>
+      <Stepper />
       <AddressForm v-if="activeForm === 'address'" />
       <DeliveryForm v-else-if="activeForm === 'delivery'" />
       <PaymentForm v-else />
-      <ButtonGroup :mode="'computer'" @clickNextStep="clickNextStep" @clickPrevStep="clickPrevStep" :currentStep='currentStep' />
+      <ButtonGroup :mode="'computer'" />
     </section>
-    <Basket :currentStep="currentStep" @clickNextStep="clickNextStep" @clickPrevStep="clickPrevStep"/>
+    <Basket />
   </main>
 </template>
 
@@ -27,28 +27,11 @@ export default {
     Basket,
     ButtonGroup,
   },
-  data() {
-    return {
-      currentStep: 0,
-      formSections: ["address", "delivery", "payment"],
-    };
-  },
+  
   computed: {
     activeForm() {
-      return this.formSections[this.currentStep];
+      return this.$store.getters['checkout/currentForm']
     },
-  },
-  methods: {
-    clickNextStep() {
-      if (this.currentStep < 2) {
-        this.currentStep++;
-      }
-    },
-    clickPrevStep(){
-        if(this.currentStep!==0){
-            this.currentStep--;
-        }
-    }
   },
 };
 </script>

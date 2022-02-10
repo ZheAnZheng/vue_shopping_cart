@@ -22,17 +22,17 @@
 
 <script>
 export default{
-  props:{
-    currentStep:{
-      type:Number,
-      required:true
-    }
-  },
+
   data(){
     return{
       STEP_ONE:'寄送地址',
       STEP_TWO:'運送方式',
       STEP_THREE:'付款資訊'
+    }
+  },
+  computed:{
+    currentStep(){  
+      return this.$store.getters['checkout/currentStep']
     }
   }
 }
