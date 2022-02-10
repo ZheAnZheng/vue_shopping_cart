@@ -5,15 +5,22 @@
       :key="icon.id"
       :class="icon.name"
       v-html="icon.image"
-      @click='icon.name==="themeToggle" && toggleTheme()'
     ></div>
+    <div v-if='currentTheme ==="light"' v-html='moonIcon.image' @click="toggleTheme"></div>
+    <div v-else v-html='sunIcon.image' @click="toggleTheme"></div>
   </div>
 </template>
 
 <script>
 import { v4 as uuidv4 } from "uuid";
-import { SEARCH_ICON, CART_ICON, THEME_ICON } from "../assets/Constants.js";
+import { SEARCH_ICON, CART_ICON, MOON_ICON , SUN_ICON } from "../assets/Constants.js";
 export default {
+  props:{
+    currentTheme:{
+      type:String,
+      required:true
+    }
+  },
   data() {
     return {
       icons: [
@@ -26,18 +33,27 @@ export default {
           id: uuidv4(),
           name: "cart",
           image: CART_ICON,
-        },
-        {
-          id: uuidv4(),
-          name: "themeToggle",
-          image: THEME_ICON,
-        },
+        }
       ],
+      
+      moonIcon:{
+          id: uuidv4(),
+          name: "themeToggle_moon",
+          image: MOON_ICON
+          
+        },
+      sunIcon:{
+          id: uuidv4(),
+          name: "themeToggle_sun",
+          image: SUN_ICON
+        }
+      
     };
   },
+
   methods:{
     toggleTheme(){
-      
+    
       this.$emit('toggleTheme')
     }
   }

@@ -1,11 +1,12 @@
 <template>
   <div id="app">
-    <Header @handleToggleTheme='handleToggleTheme'/>
+    <Header @handleToggleTheme='handleToggleTheme' :currentTheme="currentTheme"/>
     <router-view/>
     <Footer/>
   </div>
 </template>
 <script>
+
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 export default {
@@ -27,7 +28,7 @@ export default {
       }else{
         this.currentTheme='light'
       }
-      
+
       document.documentElement.setAttribute("data-theme", this.currentTheme);
      
     }

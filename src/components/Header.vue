@@ -22,7 +22,7 @@
          <!-- navbar -->
         <Navbar/>
         <!-- icon -->
-        <IconWrapper @toggleTheme='handleToggleTheme'/>
+        <IconWrapper @toggleTheme='handleToggleTheme' :currentTheme="currentTheme"/>
       </div>
     </header>
 </template>
@@ -32,6 +32,12 @@ import Navbar from './Navbar.vue'
 import IconWrapper from './IconWrapper.vue'
 import { ALPHA_LOGO } from '../assets/Constants.js'
 export default {
+  props:{
+    currentTheme:{
+      type:String,
+      required:true
+    }
+  },
   components:{
     Navbar,
     IconWrapper,
