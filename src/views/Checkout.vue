@@ -1,45 +1,59 @@
 <template>
   <main>
     <section class="checkout-wrapper">
-        <Stepper/>
-        <AddressForm v-if='currentForm==="address"'/>
-        <DeliveryForm v-else-if='currentForm==="delivery"'/>
-        <PaymentForm v-else/>
-        <ButtonGroup />
+      <Stepper :currentStep="currentStep"/>
+      <AddressForm v-if="activeForm === 'address'" />
+      <DeliveryForm v-else-if="activeForm === 'delivery'" />
+      <PaymentForm v-else />
+      <ButtonGroup :mode="'computer'" @clickNextStep="clickNextStep" @clickPrevStep="clickPrevStep" :currentStep='currentStep' />
     </section>
-    <Basket/>
+    <Basket />
   </main>
 </template>
 
 <script>
-import Stepper from '../components/Stepper.vue';
-import AddressForm from '../components/AddressForm.vue';
-import DeliveryForm from '../components/DeliveryForm.vue';
-import PaymentForm from '../components/PaymentForm.vue';
-import Basket from '../components/Basket.vue';
-import ButtonGroup from '../components/ButtonGroup.vue'
+import Stepper from "../components/Stepper.vue";
+import AddressForm from "../components/AddressForm.vue";
+import DeliveryForm from "../components/DeliveryForm.vue";
+import PaymentForm from "../components/PaymentForm.vue";
+import Basket from "../components/Basket.vue";
+import ButtonGroup from "../components/ButtonGroup.vue";
 export default {
-  components:{
-      Stepper,
-      AddressForm,
-      DeliveryForm,
-      PaymentForm,
-      Basket,
-      ButtonGroup
+  components: {
+    Stepper,
+    AddressForm,
+    DeliveryForm,
+    PaymentForm,
+    Basket,
+    ButtonGroup,
   },
-  data(){
-      return {
-          currentForm:'address'
+  data() {
+    return {
+      currentStep: 0,
+      formSections: ["address", "delivery", "payment"],
+    };
+  },
+  computed: {
+    activeForm() {
+      return this.formSections[this.currentStep];
+    },
+  },
+  methods: {
+    clickNextStep() {
+      if (this.currentStep < 2) {
+        this.currentStep++;
       }
+    },
+    clickPrevStep(){
+        if(this.currentStep!==0){
+            this.currentStep--;
+        }
+    }
   },
-  computed:{
-      
-  }
 };
 </script>
 
 <style lang="scss" scoped>
-
 @mixin setGrid($col_1, $col_2, $row_1, $row_2) {
   grid-column: #{$col_1} / #{$col_2};
   grid-row: #{$row_1} / #{$row_2};
@@ -83,14 +97,11 @@ main {
 
       width: 100%;
     }
-    
   }
- 
+
   .checkout-wrapper {
     flex: 0 0 50%;
     width: 100%;
   }
-    
 }
-
 </style>

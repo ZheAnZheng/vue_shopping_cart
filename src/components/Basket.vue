@@ -24,7 +24,7 @@
       <span class="total">$5,298</span>
     </div>
 
-    <ButtonGroup />
+    <ButtonGroup :mode="'mobile'"/>
   </section>
 </template>
 
@@ -157,7 +157,7 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     margin-top: 3.3rem;
-    height: 565px;
+    height: 510px;
     flex: 0 0 40%;
     width: 100%;
     color: var(--primary-text-color);

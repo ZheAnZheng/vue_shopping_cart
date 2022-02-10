@@ -1,6 +1,6 @@
 <template>
     <header>
-      <div class="container">
+      <div class="container" >
         <input id="hambuger" class="hambuger-toggle" type="checkbox" />
         <label for="hambuger" class="hambuger-box">
           <span class="hambuger"></span>
@@ -22,7 +22,7 @@
          <!-- navbar -->
         <Navbar/>
         <!-- icon -->
-        <IconWrapper/>
+        <IconWrapper @toggleTheme='handleToggleTheme'/>
       </div>
     </header>
 </template>
@@ -40,6 +40,11 @@ export default {
     return {
       logoImg:ALPHA_LOGO
       
+    }
+  },
+  methods:{
+    handleToggleTheme(){
+      this.$emit('handleToggleTheme')
     }
   }
 }

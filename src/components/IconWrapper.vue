@@ -5,6 +5,7 @@
       :key="icon.id"
       :class="icon.name"
       v-html="icon.image"
+      @click='icon.name==="themeToggle" && toggleTheme()'
     ></div>
   </div>
 </template>
@@ -34,6 +35,12 @@ export default {
       ],
     };
   },
+  methods:{
+    toggleTheme(){
+      
+      this.$emit('toggleTheme')
+    }
+  }
 };
 </script>
 <style lang="scss">

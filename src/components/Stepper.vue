@@ -1,24 +1,42 @@
 <template>
   <div class="step-process">
     <h2>結帳</h2>
-    <div class="step-wrapper">
-      <div class="step-item active">
+    <div class="step-wrapper" >
+      <div class="step-item " :class="{active:currentStep===0 ,done:currentStep>0}" >
         <span class="step-circle"></span>
-        <span class="step-text">寄送地址</span>
+        <span class="step-text">{{STEP_ONE}}</span>
       </div>
-      <div class="step-item">
+      <div class="step-item" :class="{active:currentStep===1,done:currentStep>1}">
         <span class="step-circle"></span>
-        <span class="step-text">運送方式</span>
+        <span class="step-text">{{STEP_TWO}}</span>
         <span class="connect-line"></span>
       </div>
-      <div class="step-item">
+      <div class="step-item" :class="{active:currentStep===2}">
         <span class="step-circle"></span>
-        <span class="step-text">付款資訊</span>
+        <span class="step-text">{{STEP_THREE}}</span>
         <span class="connect-line"></span>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default{
+  props:{
+    currentStep:{
+      type:Number,
+      required:true
+    }
+  },
+  data(){
+    return{
+      STEP_ONE:'寄送地址',
+      STEP_TWO:'運送方式',
+      STEP_THREE:'付款資訊'
+    }
+  }
+}
+</script>
 <style lang="scss">
 @import '../assets/scss/mixins.scss';
 @import '../assets/scss/extend.scss';

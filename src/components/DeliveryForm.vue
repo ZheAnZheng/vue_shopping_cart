@@ -69,7 +69,7 @@
 @media (min-width: 1000px) {
     .checkout {
     height: 336px;
-    // border-bottom: 1px solid var(--line-color);
+    border-bottom: 1px solid var(--line-color);
   }
     .checkout-deliver {
     label {

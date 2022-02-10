@@ -113,7 +113,7 @@
 @media (min-width: 1000px) {
    .checkout {
     height: 336px;
-    // border-bottom: 1px solid var(--line-color);
+    border-bottom: 1px solid var(--line-color);
   }
   .checkout-info {
     grid-template-rows: repeat(3, 64px);

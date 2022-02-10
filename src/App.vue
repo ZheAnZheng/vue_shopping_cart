@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header/>
+    <Header @handleToggleTheme='handleToggleTheme'/>
     <router-view/>
     <Footer/>
   </div>
@@ -13,10 +13,27 @@ export default {
   components:{
     Header,
     Footer
+  },
+  data(){
+    return{
+      currentTheme:'light'
+    }
+  },
+  methods:{
+    handleToggleTheme(){
+     
+      if(this.currentTheme==='light'){
+        this.currentTheme='dark'
+      }else{
+        this.currentTheme='light'
+      }
+      
+      document.documentElement.setAttribute("data-theme", this.currentTheme);
+     
+    }
   }
 }
 </script>
-
 <style lang="scss" >
 @import "assets/scss/color.scss";
 @import "assets/scss/reset.scss";
