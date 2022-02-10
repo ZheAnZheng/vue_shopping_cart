@@ -13,21 +13,31 @@ export default new Vuex.Store({
   state() {
     return {
       theme: "light",
+      modalSwitch: false,
     };
   },
   getters: {
     currentTheme(state) {
       return state.theme;
     },
+    modalSwitch(state) {
+      return state.modalSwitch;
+    },
   },
   mutations: {
     setTheme(state, payload) {
       state.theme = payload;
     },
+    toggleModal(state) {
+      state.modalSwitch = !state.modalSwitch;
+    },
   },
   actions: {
     setTheme(context, payload) {
       context.commit("setTheme", payload);
+    },
+    toggleModal(context) {
+      context.commit("toggleModal");
     },
   },
 });

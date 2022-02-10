@@ -5,9 +5,12 @@
       <span v-html="leftArrowIcon"> </span>
       上一步
     </button>
-    <button class="next-button" @click="handleStep('next')" >
-      下一步
-      <span v-html="rightArrowIcon"> </span>
+    <button v-if="isFinalStep" class="next-button" @click="handleStep('next')"> 
+        確認下單
+    </button>
+    <button v-else class="next-button" @click="handleStep('next')"> 
+        下一步
+        <span v-html="rightArrowIcon"> </span>
     </button>
   </div>
 
@@ -16,9 +19,12 @@
       <span v-html="leftArrowIcon" > </span>
       上一步
     </button>
-    <button class="next-button" @click="handleStep('next')"> 
-      下一步
-      <span v-html="rightArrowIcon"> </span>
+    <button v-if="isFinalStep" class="next-button" @click="openModal"> 
+        確認下單
+    </button>
+    <button v-else class="next-button" @click="handleStep('next')"> 
+        下一步
+        <span v-html="rightArrowIcon"> </span>
     </button>
   </div>
   </div>
@@ -40,14 +46,19 @@ export default {
   },
   computed:{
     currentStep(){
-      
       return this.$store.getters['checkout/currentStep'];
+    },
+    isFinalStep(){
+      return this.currentStep===2
     }
   },
   methods:{
     handleStep(action){
       this.$store.dispatch('checkout/controllStep',action) 
     },
+    openModal(){
+      this.$store.dispatch('toggleModal')
+    }
   }
 };
 </script>

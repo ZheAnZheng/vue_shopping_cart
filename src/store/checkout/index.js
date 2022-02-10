@@ -51,7 +51,7 @@ export default {
       context.commit("setCurrentStep", payload);
     },
     setFormData(context, payload){
-      console.log(payload)
+      console.log
       context.commit("setFormData",payload);
     }
   },

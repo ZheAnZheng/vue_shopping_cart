@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Modal/>
     <Header />
     <router-view/>
     <Footer/>
@@ -9,11 +10,13 @@
 
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
+import Modal from './components/Modal.vue';
 export default {
   name:'app',
   components:{
     Header,
-    Footer
+    Footer,
+    Modal
   },
   computed:{
     currentTheme(){
@@ -39,6 +42,7 @@ html{
 body {
   background: var(--primary-bg-color);
   width: 100%;
+  height:100%;
   &::-webkit-scrollbar{
   width: 0;
   }

@@ -47,9 +47,11 @@ export default {
       return this.$store.getters["basket/products"];
     },
     allProductsTotal() {
-      return this.products.reduce(
+      const total= this.products.reduce(
         (total, product) => (total += this.calcTotal(product)),
         this.freight);
+      this.$store.dispatch('checkout/setFormData',{total:total})
+      return total
     },
     freight(){
       return this.$store.getters['checkout/formData'].freight;
