@@ -48,6 +48,12 @@
 <script>
 import {v4 as uuidv4 } from 'uuid'
 export default{
+  created(){
+    const data=this.$store.getters['checkout/formData']
+    for(let i in this.addressFormData){
+      this.addressFormData[i]=data[i]
+    }
+  },
   data(){
     return {
       titles:[
@@ -90,11 +96,13 @@ export default{
       }
     }
   },
+
   watch:{
     addressFormData:{
       deep:true,
       handler:function(val){
         this.$store.dispatch('checkout/setFormData',val)
+        this.$store.dispatch('checkout/saveFormData')
       }
     }
   }

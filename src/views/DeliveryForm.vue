@@ -31,6 +31,10 @@ import { v4 as uuidv4 } from "uuid";
 import { priceFilter } from '../utils/mixins.js'
 export default {
   mixins:[priceFilter],
+  created(){
+    const data=this.$store.getters['checkout/formData'];
+    this.currentPlan=data.freight
+  },
   data() {
     return {
       deliverWays: [
@@ -55,8 +59,9 @@ export default {
   },
   watch:{
     currentPlan(val){
-      console.log(val)
+      
       this.$store.dispatch('checkout/setFormData',{freight:val})
+      this.$store.dispatch('checkout/saveFormData')
     }
   },
   

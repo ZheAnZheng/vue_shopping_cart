@@ -28,22 +28,20 @@ export default {
   },
   mutations: {
     setProduct(state, payload) {
-      const id = payload.id;
-      state.products = state.products.map((product) => {
-        if (product.id === id) {
-          return {
-            ...product,
-            count: product.count++,
-          };
-        }else {
-          return product;
-        }
-      });
+        const [...data]=payload
+        state.products=data
     },
+    saveProduct(state){
+      const data =JSON.stringify(state.products)
+      localStorage.setItem("basket_item", data);
+    }
   },
   actions: {
     changeProduct(context, payload) {
       context.commit("setProduct", payload);
     },
+    saveProduct(context){
+      context.commit("saveProduct");
+    }
   },
 };

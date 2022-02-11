@@ -2,7 +2,7 @@
   <div id="app">
     <Modal/>
     <Header />
-    <router-view/>
+    <Checkout/>
     <Footer/>
   </div>
 </template>
@@ -11,12 +11,14 @@
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import Modal from './components/Modal.vue';
+import Checkout from './views/Checkout.vue';
 export default {
   name:'app',
   components:{
     Header,
     Footer,
-    Modal
+    Modal,
+    Checkout
   },
   computed:{
     currentTheme(){

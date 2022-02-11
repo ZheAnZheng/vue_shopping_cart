@@ -23,6 +23,12 @@
 </template>
 <script>
 export default{
+  created(){
+    const data=this.$store.getters['checkout/formData'];
+    for(let i in this.paymentData){
+      this.paymentData[i]=data[i]
+    }
+  },
   data(){
     return{
       paymentData:{
@@ -38,6 +44,7 @@ export default{
       deep:true,
       handler:function(val){
         this.$store.dispatch('checkout/setFormData',val)
+        this.$store.dispatch('checkout/saveFormData')
       }
     }
   }

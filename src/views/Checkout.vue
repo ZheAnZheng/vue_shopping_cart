@@ -2,9 +2,7 @@
   <main>
     <section class="checkout-wrapper">
       <Stepper />
-      <AddressForm v-if="activeForm === 'address'" />
-      <DeliveryForm v-else-if="activeForm === 'delivery'" />
-      <PaymentForm v-else />
+      <router-view />
       <ButtonGroup :mode="'computer'" />
     </section>
     <Basket />
@@ -13,25 +11,25 @@
 
 <script>
 import Stepper from "../components/Stepper.vue";
-import AddressForm from "../components/AddressForm.vue";
-import DeliveryForm from "../components/DeliveryForm.vue";
-import PaymentForm from "../components/PaymentForm.vue";
 import Basket from "../components/Basket.vue";
 import ButtonGroup from "../components/ButtonGroup.vue";
 export default {
   components: {
     Stepper,
-    AddressForm,
-    DeliveryForm,
-    PaymentForm,
     Basket,
     ButtonGroup,
   },
-  
+  created(){
+    const data=JSON.parse(localStorage.getItem('formData'))
+    
+    this.$store.dispatch('checkout/setFormData',data)
+  },
   computed: {
     activeForm() {
       return this.$store.getters['checkout/currentForm']
     },
+    
+
   },
 };
 </script>

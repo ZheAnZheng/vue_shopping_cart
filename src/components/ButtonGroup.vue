@@ -1,14 +1,15 @@
 <template>
 <div>
   <div class="button-wrapper-mobile" v-if='mode==="mobile"'>
-    <button class="pre-button "  :class='{disable : currentStep===0}' @click="handleStep('prev')">
-      <span v-html="leftArrowIcon"> </span>
+    <button class="pre-button " :class='{disable : currentStep <1}' @click="handleStep('prev')">
+      <span v-html="leftArrowIcon" > </span>
       上一步
     </button>
-    <button v-if="isFinalStep" class="next-button" @click="handleStep('next')"> 
+    <button v-if="isFinalStep" class="next-button" @click="openModal"> 
         確認下單
     </button>
-    <button v-else class="next-button" @click="handleStep('next')"> 
+    
+    <button v-else class="next-button" @click="handleStep('next')" > 
         下一步
         <span v-html="rightArrowIcon"> </span>
     </button>
@@ -22,10 +23,12 @@
     <button v-if="isFinalStep" class="next-button" @click="openModal"> 
         確認下單
     </button>
-    <button v-else class="next-button" @click="handleStep('next')"> 
+    
+    <button v-else class="next-button" @click="handleStep('next')" > 
         下一步
         <span v-html="rightArrowIcon"> </span>
     </button>
+   
   </div>
   </div>
 </template>
@@ -38,6 +41,11 @@ export default {
       required:true
     },
   },
+  created(){
+    const step=localStorage.getItem('currentStep');
+    
+    this.$store.dispatch('checkout/setCurrentStep',parseInt(step))
+  },
   data() {
     return {
       rightArrowIcon: RIGHT_ARROW,
@@ -48,17 +56,37 @@ export default {
     currentStep(){
       return this.$store.getters['checkout/currentStep'];
     },
+    nextStep(){
+      return this.$store.getters['checkout/nextForm'];
+    },
+    prevStep(){
+      return this.$store.getters['checkout/prevForm']
+    },
     isFinalStep(){
       return this.currentStep===2
     }
   },
+  watch:{
+    currentStep(val){
+      this.saveStep(val)
+    }
+  },
   methods:{
     handleStep(action){
+      if(action==='next'){
+        this.$router.push(`/checkout/${this.nextStep}`)
+      }else{
+        this.$router.push(`/checkout/${this.prevStep}`)
+      }
       this.$store.dispatch('checkout/controllStep',action) 
     },
     openModal(){
       this.$store.dispatch('toggleModal')
+    },
+    saveStep(step){
+      localStorage.setItem('currentStep',step)
     }
+
   }
 };
 </script>

@@ -42,11 +42,18 @@ export default {
     ButtonGroup,
   },
   mixins:[priceFilter],
+  created(){
+    const data=JSON.parse(localStorage.getItem('basket_item'))
+    if(data){
+      this.$store.dispatch('basket/changeProduct',data)
+    }
+  },
   computed: {
-    products() {
-      return this.$store.getters["basket/products"];
+    products(){
+      return this.$store.getters['basket/products']
     },
     allProductsTotal() {
+     
       const total= this.products.reduce(
         (total, product) => (total += this.calcTotal(product)),
         this.freight);
@@ -57,21 +64,36 @@ export default {
       return this.$store.getters['checkout/formData'].freight;
     }
   },
+  watch:{
+    products:{
+      deep:true,
+      handler:function(){
+        this.saveProudct()
+      }
+    }
+  },
   methods: {
     calcTotal(product) {
       return product.count * product.price;
     },
-    addCountButton(product) {
 
+    addCountButton(product) {
         product.count++;
+        
         this.$store.dispatch("basket/changeProduct", product);
+        
     },
     removeCountButton(product) {
       if (product.count > 1) {
         product.count--;
         this.$store.dispatch("basket/changeProduct", product);
+        this.saveProudct()
       }
     },
+    saveProudct(){
+      //TODO 讀取product
+      this.$store.dispatch('basket/saveProduct')
+    }
   },
 };
 </script>
