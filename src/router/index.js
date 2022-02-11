@@ -8,30 +8,30 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    redirect: "/checkout/address",
-  },
-  {
-    path: "/checkout/address",
+    path: "/address",
     name: "address",
     component: AddressForm,
   },
   {
-    path: "/checkout/delivery",
+    path: "/delivery",
     name: "delivery",
     component: DeliveryForm,
   },
   {
-    path: "/checkout/payment",
+    path: "/payment",
     name: "payment",
     component: PaymentForm,
+  },
+  {
+    path: "/",
+    name: "Home",
+    redirect: "/address",
   },
 ];
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+  mode: 'hash',
+  base: '/vue_shopping_cart',
   routes
 })
 

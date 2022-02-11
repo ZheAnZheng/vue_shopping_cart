@@ -2,7 +2,7 @@
   <div id="app">
     <Modal/>
     <Header />
-    <Checkout/>
+    <Checkout/> 
     <Footer/>
   </div>
 </template>
