@@ -69,9 +69,6 @@ export default{
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(3, 64px);
   row-gap: 20px;
-  input{
-    
-  }
   .form-group {
     input {
       @extend %input-style;
