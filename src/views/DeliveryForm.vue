@@ -32,8 +32,7 @@ import { priceFilter } from '../utils/mixins.js'
 export default {
   mixins:[priceFilter],
   created(){
-    const data=this.$store.getters['checkout/formData'];
-    this.currentPlan=data.freight
+    this.loadPlan()
   },
   data() {
     return {
@@ -57,11 +56,22 @@ export default {
       currentPlan:500
     };
   },
+  methods:{
+    changePlan(plan){
+      this.$store.dispatch('checkout/setFormData',{freight:plan})
+    },
+    savePlan(){
+      this.$store.dispatch('checkout/saveFormData')
+    },
+    loadPlan(){
+      const formData=this.$store.getters['checkout/formData'];
+      this.currentPlan=formData.freight
+    }
+  },
   watch:{
     currentPlan(val){
-      
-      this.$store.dispatch('checkout/setFormData',{freight:val})
-      this.$store.dispatch('checkout/saveFormData')
+      this.changePlan(val)
+      this.savePlan()
     }
   },
   

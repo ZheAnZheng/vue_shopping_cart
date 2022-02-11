@@ -43,17 +43,13 @@ export default {
   },
   mixins:[priceFilter],
   created(){
-    const data=JSON.parse(localStorage.getItem('basket_item'))
-    if(data){
-      this.$store.dispatch('basket/changeProduct',data)
-    }
+      this.loadProducts()
   },
   computed: {
     products(){
       return this.$store.getters['basket/products']
     },
     allProductsTotal() {
-     
       const total= this.products.reduce(
         (total, product) => (total += this.calcTotal(product)),
         this.freight);
@@ -79,7 +75,6 @@ export default {
 
     addCountButton(product) {
         product.count++;
-        
         this.$store.dispatch("basket/changeProduct", product);
         
     },
@@ -91,8 +86,13 @@ export default {
       }
     },
     saveProudct(){
-      //TODO 讀取product
       this.$store.dispatch('basket/saveProduct')
+    },
+    loadProducts(){
+      const localStorageBasketData=JSON.parse(localStorage.getItem('basket_item'))
+      if(localStorageBasketData){
+        this.$store.dispatch('basket/changeProduct',localStorageBasketData)
+      }
     }
   },
 };

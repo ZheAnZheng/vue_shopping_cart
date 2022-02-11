@@ -24,10 +24,7 @@
 <script>
 export default{
   created(){
-    const data=this.$store.getters['checkout/formData'];
-    for(let i in this.paymentData){
-      this.paymentData[i]=data[i]
-    }
+    this.loadPaymentData()
   },
   data(){
     return{
@@ -39,12 +36,26 @@ export default{
       }
     }
   },
+  methods:{
+    changePaymentData(paymentData){
+      this.$store.dispatch('checkout/setFormData',paymentData)
+    },
+    savePaymentData(){
+      this.$store.dispatch('checkout/saveFormData')
+    },
+    loadPaymentData(){
+      const data=this.$store.getters['checkout/formData'];
+    for(let i in this.paymentData){
+      this.paymentData[i]=data[i]
+    }
+    }
+  },
   watch:{
     paymentData:{
       deep:true,
       handler:function(val){
-        this.$store.dispatch('checkout/setFormData',val)
-        this.$store.dispatch('checkout/saveFormData')
+        this.changePaymentData(val)
+        this.savePayment()
       }
     }
   }
@@ -58,6 +69,9 @@ export default{
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(3, 64px);
   row-gap: 20px;
+  input{
+    color: var(--primary-text-color);
+  }
   .form-group {
     input {
       @extend %input-style;

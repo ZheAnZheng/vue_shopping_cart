@@ -49,10 +49,7 @@
 import {v4 as uuidv4 } from 'uuid'
 export default{
   created(){
-    const data=this.$store.getters['checkout/formData']
-    for(let i in this.addressFormData){
-      this.addressFormData[i]=data[i]
-    }
+    this.loadAddressData()
   },
   data(){
     return {
@@ -96,7 +93,14 @@ export default{
       }
     }
   },
-
+  methods:{
+    loadAddressData(){
+      const FormData=this.$store.getters['checkout/formData']
+      for(let i in this.addressFormData){
+      this.addressFormData[i]=FormData[i]
+    }
+    }
+  },
   watch:{
     addressFormData:{
       deep:true,
@@ -118,6 +122,10 @@ export default{
   grid-template-rows: repeat(5, 64px);
   column-gap: 1rem;
   row-gap: 20px;
+
+  h2,input{
+    color: var(--primary-text-color);
+  }
   .form-group {
     //setGrid(x1,x2,y1,y2);
     &:nth-of-type(1) {
@@ -157,6 +165,7 @@ export default{
 
     input {
       @extend %input-style;
+      
     }
     select {
       @extend %input-style;

@@ -30,9 +30,14 @@ export default{
       STEP_THREE:'付款資訊'
     }
   },
+  methods:{
+    getCurrentStep(){
+      return this.$store.getters['checkout/currentStep']
+    }
+  },
   computed:{
     currentStep(){  
-      return this.$store.getters['checkout/currentStep']
+      return this.getCurrentStep()
     }
   }
 }

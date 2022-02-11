@@ -19,18 +19,10 @@ export default {
     Basket,
     ButtonGroup,
   },
-  created(){
-    const data=JSON.parse(localStorage.getItem('formData'))
-    
-    this.$store.dispatch('checkout/setFormData',data)
-  },
-  computed: {
-    activeForm() {
-      return this.$store.getters['checkout/currentForm']
-    },
-    
-
-  },
+  created() {
+    const localStorageFormData = JSON.parse(localStorage.getItem("formData"));
+    this.$store.dispatch("checkout/setFormData", localStorageFormData);
+  }
 };
 </script>
 

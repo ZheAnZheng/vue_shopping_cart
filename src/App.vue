@@ -26,9 +26,14 @@ export default {
     },
 
   },
+  methods:{
+    setThemeColor(color){
+      document.documentElement.setAttribute("data-theme", color);
+    }
+  },
   watch:{
     currentTheme(val){
-      document.documentElement.setAttribute("data-theme", val);
+      this.setThemeColor(val)
     }
   }
 }

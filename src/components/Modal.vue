@@ -66,12 +66,17 @@ export default {
           value: "",
         },
       },
-
     }
   },
   methods:{
       closeModal(){
           this.$store.dispatch('toggleModal')
+      },
+      loadModalState(){
+        const Data=this.$store.getters['checkout/formData'];
+          for(let name in this.formData){
+              this.formData[name].value=Data[name];
+          }
       }
   },
   computed:{
@@ -81,10 +86,7 @@ export default {
   },
   watch:{
       isModalOpen(){          
-          const Data=this.$store.getters['checkout/formData'];
-          for(let name in this.formData){
-              this.formData[name].value=Data[name];
-          }
+          this.loadModalState()
       }
   }
 };

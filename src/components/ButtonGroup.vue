@@ -42,9 +42,7 @@ export default {
     },
   },
   created(){
-    const step=localStorage.getItem('currentStep');
-    
-    this.$store.dispatch('checkout/setCurrentStep',parseInt(step))
+    this.loadStep()
   },
   data() {
     return {
@@ -85,6 +83,10 @@ export default {
     },
     saveStep(step){
       localStorage.setItem('currentStep',step)
+    },
+    loadStep(){
+      const localStorageStepData=localStorage.getItem('currentStep');
+      this.$store.dispatch('checkout/setCurrentStep',parseInt(localStorageStepData))
     }
 
   }
