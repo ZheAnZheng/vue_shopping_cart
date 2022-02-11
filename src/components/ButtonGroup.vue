@@ -72,9 +72,9 @@ export default {
   methods:{
     handleStep(action){
       if(action==='next'){
-        this.$router.push(`/checkout/${this.nextStep}`)
+        this.$router.push({name:this.nextStep})
       }else{
-        this.$router.push(`/checkout/${this.prevStep}`)
+        this.$router.push({name:this.prevStep})
       }
       this.$store.dispatch('checkout/controllStep',action) 
     },

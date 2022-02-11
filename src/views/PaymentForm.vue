@@ -71,7 +71,9 @@ export default{
   row-gap: 20px;
   .form-group {
     input {
+
       @extend %input-style;
+      color:var(--primary-text-color);
     }
     label {
       @extend %input-label-style;
