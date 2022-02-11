@@ -103,13 +103,15 @@ export default {
   justify-content: center;
   align-items: center;
   z-index: 999999;
-  width: 100%;
-  height: 100%;
+  top:0;
+  bottom:0;
+  left: 0;
+  right: 0;
   .modal {
     background: var(--primary-bg-color);
     width: 70%;
     max-width: 500px;
-    height: 60%;
+    height: 50%;
     border-radius: 7px;
   }
   .container {

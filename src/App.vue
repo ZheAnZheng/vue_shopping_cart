@@ -35,7 +35,9 @@ export default {
     },
     loadTheme(){
       const localStorageThemeData=localStorage.getItem('theme')
-      this.$store.dispatch('setTheme',localStorageThemeData)
+      if(localStorageThemeData){
+        this.$store.dispatch('setTheme',localStorageThemeData)
+      }
     }
   },
   watch:{
@@ -51,15 +53,19 @@ export default {
 html{
    font-family: 'Noto Sans TC', sans-serif;
    font-size:16px;
+
 }
 
 body {
   background: var(--primary-bg-color);
-  width: 100%;
-  height:100%;
+  height: 100%;
   &::-webkit-scrollbar{
   width: 0;
   }
+}
+#app{
+  position: relative;
+  height: 100%;
 }
 
 </style>

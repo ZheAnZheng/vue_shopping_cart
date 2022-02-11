@@ -45,7 +45,7 @@ export default{
     },
     loadPaymentData(){
       const data=this.$store.getters['checkout/formData'];
-    for(let i in this.paymentData){
+      for(let i in this.paymentData){
       this.paymentData[i]=data[i]
     }
     }
@@ -70,7 +70,7 @@ export default{
   grid-template-rows: repeat(3, 64px);
   row-gap: 20px;
   input{
-    color: var(--primary-text-color);
+    
   }
   .form-group {
     input {
