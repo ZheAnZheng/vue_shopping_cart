@@ -55,7 +55,7 @@ export default{
       deep:true,
       handler:function(val){
         this.changePaymentData(val)
-        this.savePayment()
+        this.savePaymentData()
       }
     }
   }

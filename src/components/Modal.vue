@@ -4,7 +4,7 @@
       <div class="container">
         <div class="content" v-for="item in formData" :key="item.name">
           <div class="content_title">{{ item.name }}:</div>
-          <div class="content_value">{{ item.value }}</div>
+          <div class="content_value">{{ item.value | textFilter}}</div>
         </div>
       <button class="modalBtn" @click="closeModal">確認</button>
       </div>
@@ -13,7 +13,9 @@
 </template>
 
 <script>
+import {modalFilter} from '../utils/mixins.js'
 export default {
+  mixins:[modalFilter],
   data() {
     return {
       formData: {
@@ -104,7 +106,7 @@ export default {
   width: 100%;
   height: 100%;
   .modal {
-    background: white;
+    background: var(--primary-bg-color);
     width: 70%;
     max-width: 500px;
     height: 60%;
@@ -123,11 +125,13 @@ export default {
   .content {
     display: flex;
     width: 100%;
+    color:var(--primary-text-color);
     &:last-of-type{
         margin-bottom:35px;
     }
   }
   .content_title {
+    
     flex: 0 0 30%;
   }
   .content_value {

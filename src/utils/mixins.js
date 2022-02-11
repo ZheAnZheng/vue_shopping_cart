@@ -9,3 +9,16 @@ export const priceFilter = {
     },
   },
 };
+
+
+export const modalFilter={
+  filters:{
+    textFilter(val){
+      if(val===''){
+        return '未填寫'
+      }else{
+        return val
+      }
+    }
+  }
+}

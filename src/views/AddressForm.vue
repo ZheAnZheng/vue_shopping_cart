@@ -1,5 +1,5 @@
 <template>
-  <div class="checkout active">
+  <div class="checkout">
     <h2>寄送地址</h2>
     <form class="checkout-info">
       <div class="form-group">

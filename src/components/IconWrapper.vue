@@ -46,7 +46,13 @@ export default {
   },
   computed:{
     currentTheme(){
+      
       return this.$store.getters['currentTheme'];
+    }
+  },
+  watch:{
+    currentTheme(){
+      this.saveTheme()
     }
   },
   methods:{
@@ -56,6 +62,10 @@ export default {
       }else{
         this.$store.dispatch('setTheme','light')
       }
+    },
+    saveTheme(){
+      const data=this.$store.getters['currentTheme']
+      localStorage.setItem('theme',data)
     }
   }
 };

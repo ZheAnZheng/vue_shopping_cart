@@ -20,6 +20,9 @@ export default {
     Modal,
     Checkout
   },
+  created(){
+    this.loadTheme()
+  },
   computed:{
     currentTheme(){
       return this.$store.getters['currentTheme']
@@ -29,6 +32,10 @@ export default {
   methods:{
     setThemeColor(color){
       document.documentElement.setAttribute("data-theme", color);
+    },
+    loadTheme(){
+      const localStorageThemeData=localStorage.getItem('theme')
+      this.$store.dispatch('setTheme',localStorageThemeData)
     }
   },
   watch:{
