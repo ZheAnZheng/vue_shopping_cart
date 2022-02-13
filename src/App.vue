@@ -53,7 +53,7 @@ export default {
 html{
    font-family: 'Noto Sans TC', sans-serif;
    font-size:16px;
-
+    height: 100%;
 }
 
 body {
@@ -67,5 +67,6 @@ body {
   position: relative;
   height: 100%;
 }
+
 
 </style>

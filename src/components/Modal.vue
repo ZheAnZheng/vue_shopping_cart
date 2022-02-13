@@ -97,16 +97,15 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/scss/extend.scss";
 .modalBack {
-  position: absolute;
+  position: fixed;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999999;
-  top:0;
-  bottom:0;
-  left: 0;
-  right: 0;
+  height: 100%;
+  width: 100%;
+
   .modal {
     background: var(--primary-bg-color);
     width: 70%;
