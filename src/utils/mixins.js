@@ -22,3 +22,11 @@ export const modalFilter={
     }
   }
 }
+export const formValidChecker={
+  computed:{
+    isChecked(){
+      return this.$store.getters['checkout/isChecked']
+    }
+  }
+ 
+}

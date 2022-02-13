@@ -6,6 +6,7 @@
         v-for="delivery in deliverWays"
         :key="delivery.id"
         class="form-group"
+        :class={formCheck:isChecked}
       >
         <input
           name="deliver"
@@ -29,8 +30,9 @@
 <script>
 import { v4 as uuidv4 } from "uuid";
 import { priceFilter } from '../utils/mixins.js'
+import { formValidChecker} from '../utils/mixins.js'
 export default {
-  mixins:[priceFilter],
+  mixins:[priceFilter,formValidChecker],
   created(){
     this.loadPlan()
   },
@@ -78,6 +80,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import '../assets/scss/formCheck.scss';
 .checkout-deliver {
   .form-group {
     display: flex;

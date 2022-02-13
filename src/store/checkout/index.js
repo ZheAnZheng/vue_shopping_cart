@@ -18,6 +18,7 @@ export default {
         CCV: "",
         total:0
       },
+      isChecked:false
     };
   },
   getters: {
@@ -44,6 +45,9 @@ export default {
     formData(state) {
       return state.formData;
     },
+    isChecked(state){
+      return state.isChecked;
+    }
   },
   mutations: {
     setCurrentStep(state, payload) {
@@ -59,6 +63,9 @@ export default {
       const data = JSON.stringify(state.formData);
       localStorage.setItem("formData", data);
     },
+    setChecked(state,payload){
+      state.isChecked=payload
+    }
   },
   actions: {
     controllStep(context, payload) {
@@ -80,5 +87,8 @@ export default {
       
       context.commit("saveFormData");
     },
+    setChecked(context,payload){
+      context.commit("setChecked",payload);
+    }
   },
 };

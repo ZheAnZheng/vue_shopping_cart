@@ -1,97 +1,164 @@
 <template>
-<div>
-  <div class="button-wrapper-mobile" v-if='mode==="mobile"'>
-    <button class="pre-button " :class='{disable : currentStep <1}' @click="handleStep('prev')">
-      <span v-html="leftArrowIcon" > </span>
-      上一步
-    </button>
-    <button v-if="isFinalStep" class="next-button" @click="openModal"> 
+  <div>
+    <div class="button-wrapper-mobile" v-if="mode === 'mobile'">
+      <button
+        class="pre-button"
+        :class="{ disable: currentStep < 1 }"
+        @click="handleStep('prev')"
+      >
+        <span v-html="leftArrowIcon"> </span>
+        上一步
+      </button>
+      <button
+        v-if="isFinalStep"
+        class="next-button"
+        @click="checkValidAndOpenModal"
+      >
         確認下單
-    </button>
-    
-    <button v-else class="next-button" @click="handleStep('next')" > 
-        下一步
-        <span v-html="rightArrowIcon"> </span>
-    </button>
-  </div>
+      </button>
 
-  <div class="button-wrapper-computer" v-else>
-    <button class="pre-button " :class='{disable : currentStep <1}' @click="handleStep('prev')">
-      <span v-html="leftArrowIcon" > </span>
-      上一步
-    </button>
-    <button v-if="isFinalStep" class="next-button" @click="openModal"> 
-        確認下單
-    </button>
-    
-    <button v-else class="next-button" @click="handleStep('next')" > 
+      <button v-else class="next-button" @click="handleStep('next')">
         下一步
         <span v-html="rightArrowIcon"> </span>
-    </button>
-   
-  </div>
+      </button>
+    </div>
+
+    <div class="button-wrapper-computer" v-else>
+      <button
+        class="pre-button"
+        :class="{ disable: currentStep < 1 }"
+        @click="handleStep('prev')"
+      >
+        <span v-html="leftArrowIcon"> </span>
+        上一步
+      </button>
+      <button
+        v-if="isFinalStep"
+        class="next-button"
+        @click="checkValidAndOpenModal"
+      >
+        確認下單
+      </button>
+
+      <button v-else class="next-button" @click="handleStep('next')">
+        下一步
+        <span v-html="rightArrowIcon"> </span>
+      </button>
+    </div>
   </div>
 </template>
 <script>
 import { LEFT_ARROW, RIGHT_ARROW } from "../assets/Constants.js";
+//根據目前表單給出需要檢查之項目
+const checkItemManager = {
+  addressItems: ["title", "name", "phone", "email", "state", "address"],
+  deliveryItems: ["freight"],
+  paymentItems: ["owner", "cardNumber", "expire", "CCV"],
+  getNeedCheckItem: function (currentForm) {
+    if (currentForm === "address") {
+      return this.addressItems;
+    } else if (currentForm === "delivery") {
+      return this.deliveryItems;
+    } else {
+      return this.paymentItems;
+    }
+  },
+};
 export default {
-  props:{
-    mode:{
-      type:String,
-      required:true
+  props: {
+    mode: {
+      type: String,
+      required: true,
     },
   },
-  created(){
-    this.loadStep()
+  created() {
+    this.loadStep();
   },
   data() {
     return {
       rightArrowIcon: RIGHT_ARROW,
       leftArrowIcon: LEFT_ARROW,
-    }
+    };
   },
-  computed:{
-    currentStep(){
-      return this.$store.getters['checkout/currentStep'];
+  computed: {
+    currentStep() {
+      return this.$store.getters["checkout/currentStep"];
     },
-    nextStep(){
-      return this.$store.getters['checkout/nextForm'];
+    nextStep() {
+      return this.$store.getters["checkout/nextForm"];
     },
-    prevStep(){
-      return this.$store.getters['checkout/prevForm']
+    prevStep() {
+      return this.$store.getters["checkout/prevForm"];
     },
-    isFinalStep(){
-      return this.currentStep===2
-    }
+    isFinalStep() {
+      return this.currentStep === 2;
+    },
   },
-  watch:{
-    currentStep(val){
-      this.saveStep(val)
-    }
+  watch: {
+    currentStep(val) {
+      this.saveStep(val);
+    },
   },
-  methods:{
-    handleStep(action){
-      if(action==='next'){
-        this.$router.push({name:this.nextStep})
-      }else{
-        this.$router.push({name:this.prevStep})
+  methods: {
+    handleStep(action) {
+      const isFormValid = this.checkCurrentFormVailid();
+      if (isFormValid) {
+        this.hideInputHint();
+        this.moveToFormPage(action);
+        this.$store.dispatch("checkout/controllStep", action);
+      } else {
+        this.showInputHint();
+        alert("form is inValid,please compelete form and try a again!");
       }
-      this.$store.dispatch('checkout/controllStep',action) 
     },
-    openModal(){
-      this.$store.dispatch('toggleModal')
-    },
-    saveStep(step){
-      localStorage.setItem('currentStep',step)
-    },
-    loadStep(){
-      const localStorageStepData=localStorage.getItem('currentStep');
-      if(localStorageStepData){
-        this.$store.dispatch('checkout/setCurrentStep',parseInt(localStorageStepData))
+    moveToFormPage(action) {
+      if (action === "next") {
+        this.$router.push({ name: this.nextStep });
+      } else {
+        this.$router.push({ name: this.prevStep });
       }
-    }
-
-  }
+    },
+    showInputHint() {
+      this.$store.dispatch("checkout/setChecked", true);
+    },
+    hideInputHint() {
+      this.$store.dispatch("checkout/setChecked", false);
+    },
+    checkValidAndOpenModal() {
+      const isFormValid = this.checkCurrentFormVailid();
+      if (isFormValid) {
+        this.hideInputHint();
+        this.$store.dispatch("toggleModal");
+      } else {
+        this.showInputHint();
+        alert("form is inValid,please compelete form and try a again!");
+      }
+    },
+    saveStep(step) {
+      localStorage.setItem("currentStep", step);
+    },
+    loadStep() {
+      const localStorageStepData = localStorage.getItem("currentStep");
+      if (localStorageStepData) {
+        this.$store.dispatch(
+          "checkout/setCurrentStep",
+          parseInt(localStorageStepData)
+        );
+      }
+    },
+    checkCurrentFormVailid() {
+      const formData = this.$store.getters["checkout/formData"];
+      const currentForm = this.$store.getters["checkout/currentForm"];
+      const needCheckItems = checkItemManager.getNeedCheckItem(currentForm);
+      let isValid = true;
+      needCheckItems.forEach((itemName) => {
+        if (formData[`${itemName}`] === "") {
+          isValid = false;
+        }
+      });
+      return isValid;
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -107,7 +174,6 @@ export default {
       visibility: hidden;
     }
   }
-  
 }
 
 //mobile
@@ -132,7 +198,7 @@ export default {
 @media (min-width: 1000px) {
   .button-wrapper-computer {
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: center;
     border: none;
 

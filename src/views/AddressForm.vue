@@ -2,24 +2,51 @@
   <div class="checkout">
     <h2>寄送地址</h2>
     <form class="checkout-info">
-      <div class="form-group">
+      <div class="form-group" :class={formCheck:isChecked}>
         <label for="title">稱謂</label>
         <div class="select-wrapper">
-          <select name="title" id="title" v-model="addressFormData.title">
+          <select
+            name="title"
+            id="title"
+            v-model="addressFormData.title"
+            required
+            
+          >
             <option value="" disabled>請選擇稱謂</option>
-            <option v-for="title in titles" :key="title.id" :value="title.value" >{{title.name}}</option>
+            <option
+              v-for="title in titles"
+              :key="title.id"
+              :value="title.value"
+            >
+              {{ title.name }}
+            </option>
           </select>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class={formCheck:isChecked}>
         <label for="name">姓名</label>
-        <input type="text" id="name" name="name" placeholder="請輸入姓名" v-model="addressFormData.name"/>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="請輸入姓名"
+          
+          v-model="addressFormData.name"
+          required
+        />
       </div>
-      <div class="form-group">
+      <div class="form-group" :class={formCheck:isChecked}>
         <label name="phone" for="phone">電話</label>
-        <input type="tel" placeholder="請輸入行動電話"  id="phone" v-model="addressFormData.phone"/>
+        <input
+          type="tel"
+          placeholder="請輸入行動電話"
+          id="phone"
+          v-model="addressFormData.phone"
+          required
+          
+        />
       </div>
-      <div class="form-group">
+      <div class="form-group" :class={formCheck:isChecked}>
         <label for="email">Email</label>
         <input
           name="email"
@@ -27,95 +54,111 @@
           id="email"
           placeholder="請輸入電子郵件"
           v-model="addressFormData.email"
+          required
         />
       </div>
-      <div class="form-group">
+      <div class="form-group" :class={formCheck:isChecked}>
         <label name="state" for="state">縣市</label>
         <div class="select-wrapper">
           <select id="state" v-model="addressFormData.state" required>
             <option value="" disabled>請選擇地點</option>
-            <option v-for="state in states " :key="state.id" :value="state.value" >{{state.name}}</option>
+            <option
+              v-for="state in states"
+              :key="state.id"
+              :value="state.value"
+            >
+              {{ state.name }}
+            </option>
           </select>
         </div>
       </div>
-      <div class="form-group">
-        <label name="address" for="address" >地址</label>
-        <input type="text"  id="address" placeholder="請輸入地址"  v-model="addressFormData.address"/>
+      <div class="form-group" :class={formCheck:isChecked}>
+        <label name="address" for="address">地址</label>
+        <input
+          type="text"
+          id="address"
+          placeholder="請輸入地址"
+          v-model="addressFormData.address"
+          required
+        />
       </div>
     </form>
   </div>
 </template>
 <script>
-import {v4 as uuidv4 } from 'uuid'
-export default{
-  created(){
-    this.loadAddressData()
+import { v4 as uuidv4 } from "uuid";
+import { formValidChecker} from '../utils/mixins.js'
+export default {
+  created() {
+    this.loadAddressData();
   },
-  data(){
+  mixins:[formValidChecker],
+  data() {
     return {
-      titles:[
+      titles: [
         {
-          id:uuidv4(),
-          name:'先生',
-          value:'sir'
+          id: uuidv4(),
+          name: "先生",
+          value: "sir",
         },
         {
-          id:uuidv4(),
-          name:'女士',
-          value:'miss'
-        }
+          id: uuidv4(),
+          name: "女士",
+          value: "miss",
+        },
       ],
-      states:[
+      states: [
         {
-          id:uuidv4(),
-          name:'新北',
-          value:'New_Taipei'
+          id: uuidv4(),
+          name: "新北",
+          value: "New_Taipei",
         },
         {
-          id:uuidv4(),
-          name:'台北',
-          value:'Taipei'
+          id: uuidv4(),
+          name: "台北",
+          value: "Taipei",
         },
         {
-          id:uuidv4(),
-          name:'高雄',
-          value:'Kaoushuong'
+          id: uuidv4(),
+          name: "高雄",
+          value: "Kaoushuong",
         },
-
       ],
-      addressFormData:{
-        title:'',
-        name:'',
-        phone:'',
-        email:'',
-        state:'',
-        address:''
-      }
-    }
+      addressFormData: {
+        title: "",
+        name: "",
+        phone: "",
+        email: "",
+        state: "",
+        address: "",
+      },
+      
+    };
   },
-  methods:{
-    loadAddressData(){
-      const FormData=this.$store.getters['checkout/formData']
-      for(let i in this.addressFormData){
-      this.addressFormData[i]=FormData[i]
-    }
-    }
-  },
-  watch:{
-    addressFormData:{
-      deep:true,
-      handler:function(val){
-        this.$store.dispatch('checkout/setFormData',val)
-        this.$store.dispatch('checkout/saveFormData')
+  methods: {
+    loadAddressData() {
+      const FormData = this.$store.getters["checkout/formData"];
+      for (let i in this.addressFormData) {
+        this.addressFormData[i] = FormData[i];
       }
-    }
-  }
-}
+    },
+  },
+  watch: {
+    addressFormData: {
+      deep: true,
+      handler: function (val) {
+        this.$store.dispatch("checkout/setFormData", val);
+        this.$store.dispatch("checkout/saveFormData");
+      },
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/mixins.scss';
-@import '../assets/scss/extend.scss';
+@import "../assets/scss/mixins.scss";
+@import "../assets/scss/extend.scss";
+@import "../assets/scss/formCheck.scss";
 .checkout-info {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -123,7 +166,8 @@ export default{
   column-gap: 1rem;
   row-gap: 20px;
 
-  h2,input{
+  h2,
+  input {
     color: var(--primary-text-color);
   }
   .form-group {
@@ -165,7 +209,6 @@ export default{
 
     input {
       @extend %input-style;
-      
     }
     select {
       @extend %input-style;
@@ -181,7 +224,7 @@ export default{
   }
 }
 @media (min-width: 1000px) {
-   .checkout {
+  .checkout {
     height: 336px;
     border-bottom: 1px solid var(--line-color);
   }

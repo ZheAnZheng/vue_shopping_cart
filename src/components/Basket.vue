@@ -72,7 +72,7 @@ export default {
     calcTotal(product) {
       return product.count * product.price;
     },
-
+  
     addCountButton(product) {
         product.count++;
         this.$store.dispatch("basket/changeProduct", product);

@@ -22,7 +22,8 @@ export default {
   created() {
     const localStorageFormData = JSON.parse(localStorage.getItem("formData"));
     this.$store.dispatch("checkout/setFormData", localStorageFormData);
-  }
+  },
+
 };
 </script>
 
