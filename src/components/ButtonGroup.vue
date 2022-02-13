@@ -93,6 +93,9 @@ export default {
     isFinalStep() {
       return this.currentStep === 2;
     },
+    isFormValid() {
+      return this.checkCurrentFormVailid();
+    },
   },
   watch: {
     currentStep(val) {
@@ -100,9 +103,9 @@ export default {
     },
   },
   methods: {
+    //檢查Form填寫正確才能進到下一個表單，有誤則顯示錯誤input
     handleStep(action) {
-      const isFormValid = this.checkCurrentFormVailid();
-      if (isFormValid) {
+      if (this.isFormValid) {
         this.hideInputHint();
         this.moveToFormPage(action);
         this.$store.dispatch("checkout/controllStep", action);
@@ -118,15 +121,16 @@ export default {
         this.$router.push({ name: this.prevStep });
       }
     },
+    //顯示錯誤input提示
     showInputHint() {
       this.$store.dispatch("checkout/setChecked", true);
     },
     hideInputHint() {
       this.$store.dispatch("checkout/setChecked", false);
     },
+    //檢查表單是否正確，正確開啟Modal顯示總覽，錯誤則顯示錯誤欄位
     checkValidAndOpenModal() {
-      const isFormValid = this.checkCurrentFormVailid();
-      if (isFormValid) {
+      if (this.isFormValid) {
         this.hideInputHint();
         this.$store.dispatch("toggleModal");
       } else {
@@ -146,6 +150,7 @@ export default {
         );
       }
     },
+    //檢查表單是否正確
     checkCurrentFormVailid() {
       const formData = this.$store.getters["checkout/formData"];
       const currentForm = this.$store.getters["checkout/currentForm"];

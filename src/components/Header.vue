@@ -1,54 +1,47 @@
 <template>
-    <header>
-      <div class="container" >
-        <input id="hambuger" class="hambuger-toggle" type="checkbox" />
-        <label for="hambuger" class="hambuger-box">
-          <span class="hambuger"></span>
-        </label>
-        <!-- logo -->
-        <div class="header-title">
-          <div class="logo" >
-            <svg
-              width="136"
-              height="24"
-              viewBox="0 0 136 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              v-html="logoImg"
-            ></svg>
-            
-          </div>
+  <header>
+    <div class="container">
+      <input id="hambuger" class="hambuger-toggle" type="checkbox" />
+      <label for="hambuger" class="hambuger-box">
+        <span class="hambuger"></span>
+      </label>
+      <div class="header-title">
+        <div class="logo">
+          <svg
+            width="136"
+            height="24"
+            viewBox="0 0 136 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            v-html="logoImg"
+          ></svg>
         </div>
-         <!-- navbar -->
-        <Navbar/>
-        <!-- icon -->
-        <IconWrapper />
       </div>
-    </header>
+      <Navbar />
+      <IconWrapper />
+    </div>
+  </header>
 </template>
 
 <script>
-import Navbar from './Navbar.vue'
-import IconWrapper from './IconWrapper.vue'
-import { ALPHA_LOGO } from '../assets/Constants.js'
+import Navbar from "./Navbar.vue";
+import IconWrapper from "./IconWrapper.vue";
+import { ALPHA_LOGO } from "../assets/Constants.js";
 export default {
-  components:{
+  components: {
     Navbar,
     IconWrapper,
   },
-  data(){
+  data() {
     return {
-      logoImg:ALPHA_LOGO
-    }
-  }
-}
+      logoImg: ALPHA_LOGO,
+    };
+  },
+};
 </script>
 
-<style lang="scss" >
-
-@import '../assets/scss/mixins.scss';
-
-
+<style lang="scss">
+@import "../assets/scss/mixins.scss";
 
 header {
   position: fixed;
@@ -66,7 +59,7 @@ header {
     align-items: center;
     text-align: center;
   }
-  
+
   .header-title {
     width: 100%;
     height: 56px;
@@ -74,7 +67,7 @@ header {
     .logo svg {
       width: 50%;
       height: 56px;
-      path{
+      path {
         @include setLogoColor();
       }
     }
@@ -126,14 +119,14 @@ header {
 }
 .hambuger-toggle:checked ~ .icon-wrapper {
   opacity: 1;
-  transform: scale(1,1);
+  transform: scale(1, 1);
   transition: opacity 0.1s ease-in-out 0.3s;
 }
 
 @media screen and (min-width: 550px) {
   header {
     height: 64px;
-    
+
     .container {
       display: grid;
       width: 80%;
@@ -145,7 +138,6 @@ header {
       .header-title {
         grid-area: title;
       }
-      
     }
   }
 

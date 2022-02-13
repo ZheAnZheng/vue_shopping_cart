@@ -6,13 +6,13 @@
         v-for="delivery in deliverWays"
         :key="delivery.id"
         class="form-group"
-        :class={formCheck:isChecked}
+        :class="{ formCheck: isChecked }"
       >
         <input
           name="deliver"
           type="radio"
           :id="delivery.formId"
-          :checked="delivery.price>0"
+          :checked="delivery.price > 0"
           :value="delivery.price"
           v-model="currentPlan"
         />
@@ -29,12 +29,12 @@
 </template>
 <script>
 import { v4 as uuidv4 } from "uuid";
-import { priceFilter } from '../utils/mixins.js'
-import { formValidChecker} from '../utils/mixins.js'
+import { priceFilter } from "../utils/mixins.js";
+import { formValidChecker } from "../utils/mixins.js";
 export default {
-  mixins:[priceFilter,formValidChecker],
-  created(){
-    this.loadPlan()
+  mixins: [priceFilter, formValidChecker],
+  created() {
+    this.loadPlan();
   },
   data() {
     return {
@@ -55,32 +55,32 @@ export default {
           description: "48小時內送達",
         },
       ],
-      currentPlan:500
+      currentPlan: 500,
     };
   },
-  methods:{
-    changePlan(plan){
-      this.$store.dispatch('checkout/setFormData',{freight:plan})
+  methods: {
+    changePlan(plan) {
+      this.$store.dispatch("checkout/setFormData", { freight: plan });
     },
-    savePlan(){
-      this.$store.dispatch('checkout/saveFormData')
+    savePlan() {
+      this.$store.dispatch("checkout/saveFormData");
     },
-    loadPlan(){
-      const formData=this.$store.getters['checkout/formData'];
-      this.currentPlan=formData.freight
-    }
+    loadPlan() {
+      const formData = this.$store.getters["checkout/formData"];
+      this.currentPlan = formData.freight;
+    },
   },
-  watch:{
-    currentPlan(val){
-      this.changePlan(val)
-      this.savePlan()
-    }
+  watch: {
+    //每次更換運費選項都會儲存起來
+    currentPlan(val) {
+      this.changePlan(val);
+      this.savePlan();
+    },
   },
-  
 };
 </script>
 <style lang="scss" scoped>
-@import '../assets/scss/formCheck.scss';
+@import "../assets/scss/formCheck.scss";
 .checkout-deliver {
   .form-group {
     display: flex;

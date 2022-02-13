@@ -1,3 +1,4 @@
+//負責管理表單填寫與處於哪個表單的狀態
 export default {
   namespaced: true,
   state() {
@@ -16,9 +17,9 @@ export default {
         cardNumber: "",
         expire: "",
         CCV: "",
-        total:0
+        total: 0,
       },
-      isChecked:false
+      isChecked: false,
     };
   },
   getters: {
@@ -45,9 +46,9 @@ export default {
     formData(state) {
       return state.formData;
     },
-    isChecked(state){
+    isChecked(state) {
       return state.isChecked;
-    }
+    },
   },
   mutations: {
     setCurrentStep(state, payload) {
@@ -63,9 +64,9 @@ export default {
       const data = JSON.stringify(state.formData);
       localStorage.setItem("formData", data);
     },
-    setChecked(state,payload){
-      state.isChecked=payload
-    }
+    setChecked(state, payload) {
+      state.isChecked = payload;
+    },
   },
   actions: {
     controllStep(context, payload) {
@@ -84,11 +85,10 @@ export default {
       context.commit("setCurrentStep", payload);
     },
     saveFormData(context) {
-      
       context.commit("saveFormData");
     },
-    setChecked(context,payload){
-      context.commit("setChecked",payload);
-    }
+    setChecked(context, payload) {
+      context.commit("setChecked", payload);
+    },
   },
 };

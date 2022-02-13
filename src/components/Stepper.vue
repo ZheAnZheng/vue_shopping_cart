@@ -1,19 +1,25 @@
 <template>
   <div class="step-process">
     <h2>結帳</h2>
-    <div class="step-wrapper" >
-      <div class="step-item " :class="{active:currentStep===0 ,done:currentStep>0}" >
+    <div class="step-wrapper">
+      <div
+        class="step-item"
+        :class="{ active: currentStep === 0, done: currentStep > 0 }"
+      >
         <span class="step-circle"></span>
-        <span class="step-text">{{STEP_ONE}}</span>
+        <span class="step-text">{{ STEP_ONE }}</span>
       </div>
-      <div class="step-item" :class="{active:currentStep===1,done:currentStep>1}">
+      <div
+        class="step-item"
+        :class="{ active: currentStep === 1, done: currentStep > 1 }"
+      >
         <span class="step-circle"></span>
-        <span class="step-text">{{STEP_TWO}}</span>
+        <span class="step-text">{{ STEP_TWO }}</span>
         <span class="connect-line"></span>
       </div>
-      <div class="step-item" :class="{active:currentStep===2}">
+      <div class="step-item" :class="{ active: currentStep === 2 }">
         <span class="step-circle"></span>
-        <span class="step-text">{{STEP_THREE}}</span>
+        <span class="step-text">{{ STEP_THREE }}</span>
         <span class="connect-line"></span>
       </div>
     </div>
@@ -21,35 +27,34 @@
 </template>
 
 <script>
-export default{
-
-  data(){
-    return{
-      STEP_ONE:'寄送地址',
-      STEP_TWO:'運送方式',
-      STEP_THREE:'付款資訊'
-    }
+export default {
+  data() {
+    return {
+      STEP_ONE: "寄送地址",
+      STEP_TWO: "運送方式",
+      STEP_THREE: "付款資訊",
+    };
   },
-  methods:{
-    getCurrentStep(){
-      return this.$store.getters['checkout/currentStep']
-    }
+  methods: {
+    getCurrentStep() {
+      return this.$store.getters["checkout/currentStep"];
+    },
   },
-  computed:{
-    currentStep(){  
-      return this.getCurrentStep()
-    }
-  }
-}
+  computed: {
+    currentStep() {
+      return this.getCurrentStep();
+    },
+  },
+};
 </script>
 <style lang="scss">
-@import '../assets/scss/mixins.scss';
-@import '../assets/scss/extend.scss';
+@import "../assets/scss/mixins.scss";
+@import "../assets/scss/extend.scss";
 
 .step-wrapper {
   display: flex;
   margin-top: 24px;
-  margin-bottom:24px;
+  margin-bottom: 24px;
   justify-content: space-between;
 
   .step-text {
@@ -69,7 +74,7 @@ export default{
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%,-50%);
+      transform: translate(-50%, -50%);
     }
   }
 
@@ -134,19 +139,19 @@ export default{
   }
 }
 @media (min-width: 1000px) {
-.step-text {
-      display: block;
+  .step-text {
+    display: block;
+  }
+  @include showStepText(3);
+  .step-wrapper {
+    .step-item:nth-child(2) .connect-line {
+      left: calc(-45% + 30px);
+      right: calc(80% + 30px);
     }
-    @include showStepText(3);
-    .step-wrapper {
-      .step-item:nth-child(2) .connect-line {
-        left: calc(-45% + 30px);
-        right: calc(80% + 30px);
-      }
-      .step-item:nth-child(3) .connect-line {
-        left: calc(-30% + 30px);
-        right: calc(60% + 30px);
-      }
+    .step-item:nth-child(3) .connect-line {
+      left: calc(-30% + 30px);
+      right: calc(60% + 30px);
     }
+  }
 }
 </style>

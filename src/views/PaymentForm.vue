@@ -2,66 +2,91 @@
   <div class="checkout">
     <h2>付款資訊</h2>
     <form class="checkout-card">
-      <div class="form-group" :class={formCheck:isChecked}>
+      <div class="form-group" :class="{ formCheck: isChecked }">
         <label name="owner" id="owner">持卡人姓名</label>
-        <input type="text" for="owner" placeholder="John Doe" v-model="paymentData.owner" required/>
+        <input
+          type="text"
+          for="owner"
+          placeholder="John Doe"
+          v-model="paymentData.owner"
+          required
+        />
       </div>
-      <div class="form-group" :class={formCheck:isChecked}>
+      <div class="form-group" :class="{ formCheck: isChecked }">
         <label name="card-number" id="cardNumber">卡號</label>
-        <input type="text" for="cardNumber" placeholder="1111 2222 3333 4444" v-model="paymentData.cardNumber" required/>
+        <input
+          type="text"
+          for="cardNumber"
+          placeholder="1111 2222 3333 4444"
+          v-model="paymentData.cardNumber"
+          required
+        />
       </div>
-      <div class="form-group" :class={formCheck:isChecked}>
+      <div class="form-group" :class="{ formCheck: isChecked }">
         <label name="expire-number" for="expire">有效期限</label>
-        <input type="text"  id="expire" placeholder="MM/YY"  v-model="paymentData.expire" requred/>
+        <input
+          type="text"
+          id="expire"
+          placeholder="MM/YY"
+          v-model="paymentData.expire"
+          requred
+        />
       </div>
-      <div class="form-group" :class={formCheck:isChecked}>
+      <div class="form-group" :class="{ formCheck: isChecked }">
         <label name="CCV" id="CCV">CVC/CCV</label>
-        <input type="text" for="CCV" placeholder="123" v-model="paymentData.CCV" required/>
+        <input
+          type="text"
+          for="CCV"
+          placeholder="123"
+          v-model="paymentData.CCV"
+          required
+        />
       </div>
     </form>
   </div>
 </template>
 <script>
-import { formValidChecker} from '../utils/mixins.js'
-export default{
-  created(){
-    this.loadPaymentData()
+import { formValidChecker } from "../utils/mixins.js";
+export default {
+  created() {
+    this.loadPaymentData();
   },
-  mixins:[formValidChecker],
-  data(){
-    return{
-      paymentData:{
-        owner:'',
-        cardNumber:'',
-        expire:'',
-        CCV:''
-      }
-    }
+  mixins: [formValidChecker],
+  data() {
+    return {
+      paymentData: {
+        owner: "",
+        cardNumber: "",
+        expire: "",
+        CCV: "",
+      },
+    };
   },
-  methods:{
-    changePaymentData(paymentData){
-      this.$store.dispatch('checkout/setFormData',paymentData)
+  methods: {
+    changePaymentData(paymentData) {
+      this.$store.dispatch("checkout/setFormData", paymentData);
     },
-    savePaymentData(){
-      this.$store.dispatch('checkout/saveFormData')
+    savePaymentData() {
+      this.$store.dispatch("checkout/saveFormData");
     },
-    loadPaymentData(){
-      const data=this.$store.getters['checkout/formData'];
-      for(let i in this.paymentData){
-      this.paymentData[i]=data[i]
-    }
-    }
-  },
-  watch:{
-    paymentData:{
-      deep:true,
-      handler:function(val){
-        this.changePaymentData(val)
-        this.savePaymentData()
+    loadPaymentData() {
+      const data = this.$store.getters["checkout/formData"];
+      for (let i in this.paymentData) {
+        this.paymentData[i] = data[i];
       }
-    }
-  }
-}
+    },
+  },
+  watch: {
+    //每次表單改變都會更新並且儲存
+    paymentData: {
+      deep: true,
+      handler: function (val) {
+        this.changePaymentData(val);
+        this.savePaymentData();
+      },
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 @import "../assets/scss/mixins.scss";
@@ -74,9 +99,8 @@ export default{
   row-gap: 20px;
   .form-group {
     input {
-
       @extend %input-style;
-      color:var(--primary-text-color);
+      color: var(--primary-text-color);
     }
     label {
       @extend %input-label-style;

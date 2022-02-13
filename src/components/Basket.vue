@@ -23,7 +23,7 @@
     </div>
     <div class="freight">
       <span>運費</span>
-      <span>{{freight | priceDisplay}}</span>
+      <span>{{ freight | priceDisplay }}</span>
     </div>
     <div class="product-total">
       <span>小計</span>
@@ -36,64 +36,66 @@
 
 <script>
 import ButtonGroup from "./ButtonGroup.vue";
-import {priceFilter} from '../utils/mixins.js'
+import { priceFilter } from "../utils/mixins.js";
 export default {
   components: {
     ButtonGroup,
   },
-  mixins:[priceFilter],
-  created(){
-      this.loadProducts()
+  mixins: [priceFilter],
+  created() {
+    this.loadProducts();
   },
   computed: {
-    products(){
-      return this.$store.getters['basket/products']
+    products() {
+      return this.$store.getters["basket/products"];
     },
     allProductsTotal() {
-      const total= this.products.reduce(
+      const total = this.products.reduce(
         (total, product) => (total += this.calcTotal(product)),
-        this.freight);
-      this.$store.dispatch('checkout/setFormData',{total:total})
-      return total
+        this.freight
+      );
+      this.$store.dispatch("checkout/setFormData", { total: total });
+      return total;
     },
-    freight(){
-      return this.$store.getters['checkout/formData'].freight;
-    }
+    freight() {
+      return this.$store.getters["checkout/formData"].freight;
+    },
   },
-  watch:{
-    products:{
-      deep:true,
-      handler:function(){
-        this.saveProudct()
-      }
-    }
+  watch: {
+    products: {
+      deep: true,
+      handler: function () {
+        this.saveProudct();
+      },
+    },
   },
   methods: {
     calcTotal(product) {
       return product.count * product.price;
     },
-  
+
     addCountButton(product) {
-        product.count++;
-        this.$store.dispatch("basket/changeProduct", product);
-        
+      product.count++;
+      this.$store.dispatch("basket/changeProduct", product);
     },
     removeCountButton(product) {
       if (product.count > 1) {
         product.count--;
         this.$store.dispatch("basket/changeProduct", product);
-        this.saveProudct()
+        this.saveProudct();
       }
     },
-    saveProudct(){
-      this.$store.dispatch('basket/saveProduct')
+    saveProudct() {
+      this.$store.dispatch("basket/saveProduct");
     },
-    loadProducts(){
-      const localStorageBasketData=JSON.parse(localStorage.getItem('basket_item'))
-      if(localStorageBasketData){
-        this.$store.dispatch('basket/changeProduct',localStorageBasketData)
+    loadProducts() {
+      const localStorageBasketData = JSON.parse(
+        localStorage.getItem("basket_item")
+      );
+      if (localStorageBasketData) {
+        this.$store.dispatch("basket/changeProduct", localStorageBasketData);
       }
-    }
+    },
   },
 };
 </script>

@@ -6,14 +6,23 @@
       :class="icon.name"
       v-html="icon.image"
     ></div>
-    <div v-if='currentTheme ==="light"' v-html='moonIcon.image' @click="toggleTheme"></div>
-    <div v-else v-html='sunIcon.image' @click="toggleTheme"></div>
+    <div
+      v-if="currentTheme === 'light'"
+      v-html="moonIcon.image"
+      @click="toggleTheme"
+    ></div>
+    <div v-else v-html="sunIcon.image" @click="toggleTheme"></div>
   </div>
 </template>
 
 <script>
 import { v4 as uuidv4 } from "uuid";
-import { SEARCH_ICON, CART_ICON, MOON_ICON , SUN_ICON } from "../assets/Constants.js";
+import {
+  SEARCH_ICON,
+  CART_ICON,
+  MOON_ICON,
+  SUN_ICON,
+} from "../assets/Constants.js";
 export default {
   data() {
     return {
@@ -27,47 +36,44 @@ export default {
           id: uuidv4(),
           name: "cart",
           image: CART_ICON,
-        }
-      ],
-      
-      moonIcon:{
-          id: uuidv4(),
-          name: "themeToggle_moon",
-          image: MOON_ICON
-          
         },
-      sunIcon:{
-          id: uuidv4(),
-          name: "themeToggle_sun",
-          image: SUN_ICON
-        }
-      
+      ],
+
+      moonIcon: {
+        id: uuidv4(),
+        name: "themeToggle_moon",
+        image: MOON_ICON,
+      },
+      sunIcon: {
+        id: uuidv4(),
+        name: "themeToggle_sun",
+        image: SUN_ICON,
+      },
     };
   },
-  computed:{
-    currentTheme(){
-      
-      return this.$store.getters['currentTheme'];
-    }
+  computed: {
+    currentTheme() {
+      return this.$store.getters["currentTheme"];
+    },
   },
-  watch:{
-    currentTheme(){
-      this.saveTheme()
-    }
+  watch: {
+    currentTheme() {
+      this.saveTheme();
+    },
   },
-  methods:{
-    toggleTheme(){
-      if(this.currentTheme ==='light'){
-        this.$store.dispatch('setTheme','dark')
-      }else{
-        this.$store.dispatch('setTheme','light')
+  methods: {
+    toggleTheme() {
+      if (this.currentTheme === "light") {
+        this.$store.dispatch("setTheme", "dark");
+      } else {
+        this.$store.dispatch("setTheme", "light");
       }
     },
-    saveTheme(){
-      const data=this.$store.getters['currentTheme']
-      localStorage.setItem('theme',data)
-    }
-  }
+    saveTheme() {
+      const data = this.$store.getters["currentTheme"];
+      localStorage.setItem("theme", data);
+    },
+  },
 };
 </script>
 <style lang="scss">

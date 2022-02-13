@@ -2,7 +2,7 @@
   <div class="checkout">
     <h2>寄送地址</h2>
     <form class="checkout-info">
-      <div class="form-group" :class={formCheck:isChecked}>
+      <div class="form-group" :class="{ formCheck: isChecked }">
         <label for="title">稱謂</label>
         <div class="select-wrapper">
           <select
@@ -10,7 +10,6 @@
             id="title"
             v-model="addressFormData.title"
             required
-            
           >
             <option value="" disabled>請選擇稱謂</option>
             <option
@@ -23,19 +22,18 @@
           </select>
         </div>
       </div>
-      <div class="form-group" :class={formCheck:isChecked}>
+      <div class="form-group" :class="{ formCheck: isChecked }">
         <label for="name">姓名</label>
         <input
           type="text"
           id="name"
           name="name"
           placeholder="請輸入姓名"
-          
           v-model="addressFormData.name"
           required
         />
       </div>
-      <div class="form-group" :class={formCheck:isChecked}>
+      <div class="form-group" :class="{ formCheck: isChecked }">
         <label name="phone" for="phone">電話</label>
         <input
           type="tel"
@@ -43,10 +41,9 @@
           id="phone"
           v-model="addressFormData.phone"
           required
-          
         />
       </div>
-      <div class="form-group" :class={formCheck:isChecked}>
+      <div class="form-group" :class="{ formCheck: isChecked }">
         <label for="email">Email</label>
         <input
           name="email"
@@ -57,7 +54,7 @@
           required
         />
       </div>
-      <div class="form-group" :class={formCheck:isChecked}>
+      <div class="form-group" :class="{ formCheck: isChecked }">
         <label name="state" for="state">縣市</label>
         <div class="select-wrapper">
           <select id="state" v-model="addressFormData.state" required>
@@ -72,7 +69,7 @@
           </select>
         </div>
       </div>
-      <div class="form-group" :class={formCheck:isChecked}>
+      <div class="form-group" :class="{ formCheck: isChecked }">
         <label name="address" for="address">地址</label>
         <input
           type="text"
@@ -87,12 +84,12 @@
 </template>
 <script>
 import { v4 as uuidv4 } from "uuid";
-import { formValidChecker} from '../utils/mixins.js'
+import { formValidChecker } from "../utils/mixins.js";
 export default {
   created() {
     this.loadAddressData();
   },
-  mixins:[formValidChecker],
+  mixins: [formValidChecker],
   data() {
     return {
       titles: [
@@ -132,7 +129,6 @@ export default {
         state: "",
         address: "",
       },
-      
     };
   },
   methods: {
@@ -144,6 +140,7 @@ export default {
     },
   },
   watch: {
+    //當資料有任何變動都會儲存起來
     addressFormData: {
       deep: true,
       handler: function (val) {

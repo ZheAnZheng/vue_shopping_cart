@@ -1,10 +1,9 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-// import Checkout from '../views/Checkout.vue'
-import AddressForm from "../views/AddressForm.vue"
-import DeliveryForm from "../views/DeliveryForm.vue"
-import PaymentForm from "../views/PaymentForm.vue"
-Vue.use(VueRouter)
+import Vue from "vue";
+import VueRouter from "vue-router";
+import AddressForm from "../views/AddressForm.vue";
+import DeliveryForm from "../views/DeliveryForm.vue";
+import PaymentForm from "../views/PaymentForm.vue";
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -30,9 +29,9 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: 'hash',
-  base: '/vue_shopping_cart',
-  routes
-})
+  mode: "hash",
+  base: "/vue_shopping_cart",
+  routes,
+});
 
-export default router
+export default router;

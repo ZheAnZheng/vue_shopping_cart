@@ -1,10 +1,11 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import checkoutModule from './checkout/index.js';
-import basketModule from './basket/index.js';
+import Vue from "vue";
+import Vuex from "vuex";
+import checkoutModule from "./checkout/index.js";
+import basketModule from "./basket/index.js";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
+//負責管理整體(夜間模式,Modal開關)狀態
 export default new Vuex.Store({
   modules: {
     checkout: checkoutModule,

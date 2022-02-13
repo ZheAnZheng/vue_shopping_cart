@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+//負責管理購物車商品的資訊
 export default {
   namespaced: true,
   state() {
@@ -28,20 +29,20 @@ export default {
   },
   mutations: {
     setProduct(state, payload) {
-        const [...data]=payload
-        state.products=data
+      const [...data] = payload;
+      state.products = data;
     },
-    saveProduct(state){
-      const data =JSON.stringify(state.products)
+    saveProduct(state) {
+      const data = JSON.stringify(state.products);
       localStorage.setItem("basket_item", data);
-    }
+    },
   },
   actions: {
     changeProduct(context, payload) {
       context.commit("setProduct", payload);
     },
-    saveProduct(context){
+    saveProduct(context) {
       context.commit("saveProduct");
-    }
+    },
   },
 };

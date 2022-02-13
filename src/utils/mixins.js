@@ -1,3 +1,4 @@
+//顯示處理過的價錢
 export const priceFilter = {
   filters: {
     priceDisplay(val) {
@@ -10,23 +11,23 @@ export const priceFilter = {
   },
 };
 
-
-export const modalFilter={
-  filters:{
-    textFilter(val){
-      if(val===''){
-        return '未填寫'
-      }else{
-        return val
+//將modal顯示金錢相關的做處理
+export const modalFilter = {
+  filters: {
+    textFilter(val) {
+      if (typeof val === "number") {
+        return `${val}元`;
+      } else {
+        return val;
       }
-    }
-  }
-}
-export const formValidChecker={
-  computed:{
-    isChecked(){
-      return this.$store.getters['checkout/isChecked']
-    }
-  }
- 
-}
+    },
+  },
+};
+//處理表單正確性的mixins
+export const formValidChecker = {
+  computed: {
+    isChecked() {
+      return this.$store.getters["checkout/isChecked"];
+    },
+  },
+};

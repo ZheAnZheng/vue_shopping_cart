@@ -4,18 +4,18 @@
       <div class="container">
         <div class="content" v-for="item in formData" :key="item.name">
           <div class="content_title">{{ item.name }}:</div>
-          <div class="content_value">{{ item.value | textFilter}}</div>
+          <div class="content_value">{{ item.value | textFilter }}</div>
         </div>
-      <button class="modalBtn" @click="closeModal">確認</button>
+        <button class="modalBtn" @click="closeModal">確認</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {modalFilter} from '../utils/mixins.js'
+import { modalFilter } from "../utils/mixins.js";
 export default {
-  mixins:[modalFilter],
+  mixins: [modalFilter],
   data() {
     return {
       formData: {
@@ -68,29 +68,31 @@ export default {
           value: "",
         },
       },
-    }
+    };
   },
-  methods:{
-      closeModal(){
-          this.$store.dispatch('toggleModal')
-      },
-      loadModalState(){
-        const Data=this.$store.getters['checkout/formData'];
-          for(let name in this.formData){
-              this.formData[name].value=Data[name];
-          }
+  methods: {
+    closeModal() {
+      this.$store.dispatch("toggleModal");
+    },
+    //將Modal所需資料載入formData
+    loadModalState() {
+      const Data = this.$store.getters["checkout/formData"];
+      for (let name in this.formData) {
+        this.formData[name].value = Data[name];
       }
+    },
   },
-  computed:{
-      isModalOpen(){
-          return this.$store.getters['modalSwitch']
-      }
+  computed: {
+    isModalOpen() {
+      return this.$store.getters["modalSwitch"];
+    },
   },
-  watch:{
-      isModalOpen(){          
-          this.loadModalState()
-      }
-  }
+  watch: {
+    //每一次Modal打開時都重新載入資料，確保資料一致
+    isModalOpen() {
+      this.loadModalState();
+    },
+  },
 };
 </script>
 
@@ -126,13 +128,12 @@ export default {
   .content {
     display: flex;
     width: 100%;
-    color:var(--primary-text-color);
-    &:last-of-type{
-        margin-bottom:35px;
+    color: var(--primary-text-color);
+    &:last-of-type {
+      margin-bottom: 35px;
     }
   }
   .content_title {
-    
     flex: 0 0 30%;
   }
   .content_value {
